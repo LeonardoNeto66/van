@@ -1,0 +1,22 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-media"></div>
+
+    <form class="login-form" (submit)="onSubmit($event)" novalidate>
+      <h1>Login Administrador</h1>
+
+      <label for="user">Usuário</label>
+      <input id="user" type="text" placeholder="admin" (input)="user = $any($event.target).value" autocomplete="username" />
+
+      <label for="password">Senha</label>
+      <input id="password" type="password" placeholder="••••••••" (input)="password = $any($event.target).value" autocomplete="current-password" />
+
+      <div class="actions">
+        <button type="submit" [disabled]="isSubmitting">Entrar</button>
+      </div>
+
+      <div class="error" *ngIf="error">{{ error }}</div>
+      <div class="hint">Use credenciais de administrador para acessar a área restrita.</div>
+    </form>
+  </div>
+</div>
