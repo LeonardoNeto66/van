@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FakeApiService } from '../../services/fake-api.service';
-import { Empresa } from '../../models/empresa.model';
-import { Van } from '../../models/van.model';
+import { FakeApiService } from '../services/fakeapiservice/fake-api.service'; // Caminho corrigido
+import { Empresa } from '../models/empresa.model'; // Caminho corrigido
+import { Van } from '../models/van.model'; // Caminho corrigido
+// 1. Importe CommonModule, FormsModule e DatePipe
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-empresas-gerenciar',
+  standalone: true, // 2. Adicione
+  imports: [CommonModule, FormsModule, DatePipe], // 3. Adicione (DatePipe para o | date)
   templateUrl: './empresas-gerenciar.component.html',
   styleUrls: ['./empresas-gerenciar.component.css']
 })

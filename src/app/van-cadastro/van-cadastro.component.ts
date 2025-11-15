@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FakeApiService } from '../../services/fake-api.service';
-import { Van } from '../../models/van.model';
-import { Empresa } from '../../models/empresa.model';
+// 1. Importe CommonModule e ReactiveFormsModule
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FakeApiService } from '../services/fakeapiservice/fake-api.service'; // Caminho corrigido
+import { Van } from '../models/van.model'; // Caminho corrigido
+import { Empresa } from '../models/empresa.model'; // Caminho corrigido
 
 @Component({
   selector: 'app-van-cadastro',
+  standalone: true, // 2. Adicione
+  imports: [CommonModule, ReactiveFormsModule], // 3. Adicione
   templateUrl: './van-cadastro.component.html',
   styleUrls: ['./van-cadastro.component.css']
 })
@@ -44,7 +48,6 @@ export class VanCadastroComponent implements OnInit {
       anoModelo: new Date().getFullYear(),
       anoFabricacao: new Date().getFullYear()
     });
-    // For Robot: expose created van id in a DOM element
     setTimeout(() => {
       const el = document.getElementById('lastCreatedVanId');
       if (el) el.textContent = van.id;

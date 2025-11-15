@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FakeApiService } from '../services/fake-api.service';
-import { Escola } from '../../models/escola.model';
+import { FakeApiService } from '../services/fakeapiservice/fake-api.service'; // Caminho corrigido
+import { Escola } from '../models/escola.model'; // Caminho corrigido
+// 1. Importe CommonModule e FormsModule
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-escolas-gerenciar',
+  standalone: true, // 2. Adicione
+  imports: [CommonModule, FormsModule], // 3. Adicione
   templateUrl: './escolas-gerenciar.component.html',
   styleUrls: ['./escolas-gerenciar.component.css']
 })
