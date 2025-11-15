@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FakeApiService } from '../../services/fake-api.service';
+import { FakeApiService } from '../services/fake-api.service';
 import { Escola } from '../../models/escola.model';
 
 @Component({
