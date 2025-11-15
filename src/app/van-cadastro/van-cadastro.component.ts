@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 // 1. Importe CommonModule e ReactiveFormsModule
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { FakeApiService } from '../services/fakeapiservice/fake-api.service'; // Caminho corrigido
-import { Van } from '../models/van.model'; // Caminho corrigido
-import { Empresa } from '../models/empresa.model'; // Caminho corrigido
+import { FakeApiService } from '../services/fakeapiservice/fake-api.service';
+import { Van } from '../models/van.model';
+import { Empresa } from '../models/empresa.model';
 
 @Component({
   selector: 'app-van-cadastro',
