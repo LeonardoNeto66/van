@@ -1,10 +1,18 @@
-import { Routes } from '@angular/router';
-import { TelaLoginComponent } from './tela-login/tela-login.component';
-import { AdminComponent } from './admin/admin.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { VanCadastroComponent } from './van-cadastro/van-cadastro.component';
+import { EmpresasGerenciarComponent } from './empresas-gerenciar/empresas-gerenciar.component';
+import { EscolasGerenciarComponent } from './escolas-gerenciar/escolas-gerenciar.component';
 
-export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: TelaLoginComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: '**', redirectTo: 'login' }
+const routes: Routes = [
+  { path: 'cadastrar-van', component: VanCadastroComponent },
+  { path: 'empresas', component: EmpresasGerenciarComponent },
+  { path: 'escolas', component: EscolasGerenciarComponent },
+  { path: '', redirectTo: 'cadastrar-van', pathMatch: 'full' }
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

@@ -1,0 +1,55 @@
+<div id="empresas-card" class="card">
+  <h2>RF033 — Gerenciar Empresas</h2>
+
+  <div>
+    <label for="new-empresa">Nova Empresa</label>
+    <input id="input-nova-empresa" data-qa="input-nova-empresa" [(ngModel)]="newEmpresaName" />
+    <button id="btn-criar-empresa" data-qa="btn-criar-empresa" (click)="createEmpresa()">Criar</button>
+  </div>
+
+  <hr />
+
+  <div style="display:flex; gap:1rem;">
+    <div style="flex:1;">
+      <h3>Lista de Empresas</h3>
+      <ul id="list-empresas" data-qa="list-empresas">
+        <li *ngFor="let e of empresas" id="empresa-{{e.id}}">
+          <span>{{ e.nome }}</span>
+          <button data-qa="btn-selecionar-empresa-{{e.id}}" (click)="selectEmpresa(e.id)">Ver</button>
+          <button data-qa="btn-excluir-empresa-{{e.id}}" (click)="deleteEmpresa(e.id)">Excluir</button>
+        </li>
+      </ul>
+    </div>
+
+    <div style="flex:2;">
+      <h3>Detalhes da Empresa</h3>
+      <div *ngIf="selected; else noSel" id="detalhes-empresa">
+        <p><strong>Nome:</strong> <span id="empresa-nome">{{ selected.nome }}</span></p>
+        <p><strong>Criada em:</strong> <span id="empresa-criada">{{ selected.createdAt | date:'short' }}</span></p>
+        <p><strong>Solicitante:</strong> <span id="empresa-solicitante">{{ selected.solicitante }}</span></p>
+        <p><strong>Responsável:</strong> <span id="empresa-responsavel">{{ selected.responsavel || '—' }}</span></p>
+
+        <h4>Funcionários</h4>
+        <ul id="empresa-funcionarios">
+          <li *ngFor="let f of (selected.funcionarios || [])">{{ f }}</li>
+        </ul>
+
+        <h4>Vans</h4>
+        <table id="empresa-vans" border="1">
+          <thead><tr><th>Placa</th><th>Modelo</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let vid of (selected.vans || [])">
+              <td>{{ (vans.find(v => v.id===vid)?.placa) || '—' }}</td>
+              <td>{{ (vans.find(v => v.id===vid)?.marcaModelo) || '—' }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button id="btn-excluir-empresa-detalhe" (click)="deleteEmpresa(selected.id)">Excluir Empresa</button>
+      </div>
+      <ng-template #noSel>
+        <p id="no-empresa">Selecione uma empresa para ver detalhes</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

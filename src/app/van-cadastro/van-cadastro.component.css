@@ -1,0 +1,5 @@
+/* layout simples */
+.card { padding: 1rem; border: 1px solid #ccc; background: #fff; }
+form div { margin-bottom: 0.5rem; }
+input, select { width: 100%; max-width: 320px; padding: 0.25rem; }
+table { width: 100%; margin-top: 0.5rem; }

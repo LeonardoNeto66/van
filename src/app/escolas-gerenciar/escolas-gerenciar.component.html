@@ -1,0 +1,35 @@
+<div id="escolas-card" class="card">
+  <h2>RF026 — Gerenciamento de Escolas</h2>
+
+  <div>
+    <label for="nome-escola">Nome</label>
+    <input id="input-nome-escola" data-qa="input-nome-escola" [(ngModel)]="newNome" />
+    <label for="endereco-escola">Endereço</label>
+    <input id="input-endereco-escola" data-qa="input-endereco-escola" [(ngModel)]="newEndereco" />
+    <button id="btn-criar-escola" data-qa="btn-criar-escola" (click)="createEscola()">Criar Escola</button>
+  </div>
+
+  <hr />
+
+  <h3>Escolas</h3>
+  <table id="table-escolas" border="1">
+    <thead><tr><th>Nome</th><th>Endereço</th><th>Ações</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let s of escolas" id="row-escola-{{s.id}}">
+        <td *ngIf="!editing || editing.id !== s.id">{{ s.nome }}</td>
+        <td *ngIf="!editing || editing.id !== s.id">{{ s.endereco }}</td>
+
+        <td *ngIf="!editing || editing.id !== s.id">
+          <button data-qa="btn-editar-escola-{{s.id}}" (click)="edit(s)">Editar</button>
+          <button data-qa="btn-excluir-escola-{{s.id}}" (click)="deleteEscola(s.id)">Excluir</button>
+        </td>
+
+        <td *ngIf="editing && editing.id === s.id">
+          <input id="edit-nome-escola" [(ngModel)]="editing.nome" />
+          <input id="edit-endereco-escola" [(ngModel)]="editing.endereco" />
+          <button id="btn-salvar-edicao-escola" (click)="saveEdit()">Salvar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
