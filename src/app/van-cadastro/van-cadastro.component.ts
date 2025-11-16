@@ -59,4 +59,9 @@ export class VanCadastroComponent implements OnInit {
     this.api.deleteVan(id);
     this.vans = this.api.listVans();
   }
+  getEmpresaNome(empresaId: string | undefined): string {
+    if (!empresaId) return '—';
+    return this.empresas.find(x => x.id === empresaId)?.nome || '—';
+  }
 }
+

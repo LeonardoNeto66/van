@@ -45,5 +45,15 @@ export class EmpresasGerenciarComponent implements OnInit {
     this.api.deleteEmpresa(id);
     this.refresh();
     this.selected = undefined;
+    
+  }
+   getVanPlaca(vid: string): string {
+    return this.vans.find(v => v.id === vid)?.placa || '—';
+  }
+
+  getVanModelo(vid: string): string {
+    return this.vans.find(v => v.id === vid)?.marcaModelo || '—';
   }
 }
+
+

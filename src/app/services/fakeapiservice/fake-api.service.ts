@@ -1,10 +1,9 @@
-import { Injectable, PLATFORM_ID, Inject } from '@angular/core'; // 1. Importar PLATFORM_ID e Inject
-import { isPlatformBrowser } from '@angular/common'; // 2. Importar isPlatformBrowser
-import { Van } from '../../models/van.model'; // 3. Corrigir caminho (precisa de ../../)
-import { Empresa } from '../../models/empresa.model'; // 3. Corrigir caminho
-import { Escola } from '../../models/escola.model'; // 3. Corrigir caminho
-
-
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Van } from '../../models/van.model';
+import { Empresa } from '../../models/empresa.model';
+import { Escola } from '../../models/escola.model';
+import { v4 as uuid } from 'uuid'; // <-- ADICIONE ESTA LINHA
 
 @Injectable({ providedIn: 'root' })
 export class FakeApiService {

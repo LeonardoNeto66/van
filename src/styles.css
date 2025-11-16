@@ -1,1 +1,93 @@
-/* You can add global styles to this file, and also import other style files */
+:root{
+  --bg-1:#d6a315;     /* amarelo escuro */
+  --bg-2:#b88700;     /* amarelo queimado */
+  --bg-3:#8a6a00;     /* sombra */
+  --brand-ink:#2b250b;
+  --panel-ink:#231f0f;
+  --surface:#ffffff10;
+  --stroke:#ffffff36;
+  --ring:#ffdf70;
+  --ink:#1b1b1b;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(255,255,255,.18), transparent 60%),
+    radial-gradient(900px 500px at 120% 10%, rgba(255,255,255,.10), transparent 60%),
+    linear-gradient(180deg, var(--bg-1), var(--bg-2) 60%, var(--bg-3));
+}
+
+/* Botões globais */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:40px; padding:0 14px; border-radius:10px; border:1px solid #c08b00;
+  background: linear-gradient(180deg, #ffd34a, #ffc21a);
+  color:#1a1200; font-weight:700; text-decoration:none;
+  box-shadow:0 6px 12px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.6);
+}
+.btn:hover{ filter:brightness(1.03) saturate(1.05) }
+.btn:active{ transform: translateY(1px) }
+
+/* Cartões/superfícies */
+.card{
+  background: var(--surface);
+  border:1px solid var(--stroke);
+  border-radius:16px;
+  padding:16px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+/* Formulários */
+input, select, textarea {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #b17e00;
+  background: rgba(255,255,255,.9);
+  padding: 0 12px;
+  outline: none;
+  transition: box-shadow .15s ease, border-color .15s ease, background .2s ease;
+}
+textarea{ height:auto; min-height: 96px; padding: 10px 12px }
+input:focus, select:focus, textarea:focus{
+  border-color: #d19a00;
+  box-shadow: 0 0 0 4px rgba(255, 209, 64, .35);
+  background: #fff;
+}
+label{ font-weight:600; margin-bottom:6px; display:inline-block }
+
+/* Tabelas */
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  background: rgba(255,255,255,.85);
+  border: 1px solid #d1a200;
+  border-radius: 12px;
+  overflow: hidden;
+}
+thead th{
+  background: linear-gradient(180deg,#ffe27a,#ffd34a);
+  color:#1a1200;
+  text-align:left;
+  padding:10px 12px;
+  font-weight:800;
+  border-bottom:1px solid #e3c044;
+}
+tbody td{
+  padding:10px 12px;
+  border-bottom:1px solid #efde9f;
+}
+tbody tr:nth-child(even){ background: rgba(255,255,255,.6) }
+tbody tr:hover{ background:#fff3c7 }
+
+/* Utilitários */
+.container{ max-width: 1080px; margin: 0 auto; padding: 16px }
+.stack-md > * + *{ margin-top: 12px }
+.stack-lg > * + *{ margin-top: 18px }

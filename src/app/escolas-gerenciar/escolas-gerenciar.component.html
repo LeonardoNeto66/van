@@ -1,35 +1,148 @@
-<div id="escolas-card" class="card">
-  <h2>RF026 — Gerenciamento de Escolas</h2>
+<section class="escolas-page">
+  <div class="escolas-card">
+    <header class="card-header">
+      <span class="badge">RF026</span>
+      <div class="header-copy">
+        <h1>Gerenciar Escolas</h1>
+        <p>Cadastre, edite e mantenha as escolas atualizadas.</p>
+      </div>
+    </header>
 
-  <div>
-    <label for="nome-escola">Nome</label>
-    <input id="input-nome-escola" data-qa="input-nome-escola" [(ngModel)]="newNome" />
-    <label for="endereco-escola">Endereço</label>
-    <input id="input-endereco-escola" data-qa="input-endereco-escola" [(ngModel)]="newEndereco" />
-    <button id="btn-criar-escola" data-qa="btn-criar-escola" (click)="createEscola()">Criar Escola</button>
+    <form class="escola-form" (ngSubmit)="createEscola()">
+      <div class="field-grid">
+        <label for="input-nome-escola">
+          Nome *
+          <input
+            id="input-nome-escola"
+            [attr.data-qa]="'input-nome-escola'"
+            [(ngModel)]="newNome"
+            name="nome"
+            required
+          />
+        </label>
+
+        <label for="input-endereco-escola">
+          Endereço
+          <input
+            id="input-endereco-escola"
+            [attr.data-qa]="'input-endereco-escola'"
+            [(ngModel)]="newEndereco"
+            name="endereco"
+          />
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <span class="helper">Campos com * são obrigatórios.</span>
+        <button
+          id="btn-criar-escola"
+          [attr.data-qa]="'btn-criar-escola'"
+          type="submit"
+          class="btn primary"
+          [disabled]="!newNome.trim()"
+        >
+          Adicionar escola
+        </button>
+      </div>
+    </form>
   </div>
 
-  <hr />
+  <div class="escolas-list">
+    <header class="list-header">
+      <div>
+        <h2>Escolas cadastradas</h2>
+        <p class="muted">Selecione uma escola para editar ou remover.</p>
+      </div>
+    </header>
 
-  <h3>Escolas</h3>
-  <table id="table-escolas" border="1">
-    <thead><tr><th>Nome</th><th>Endereço</th><th>Ações</th></tr></thead>
-    <tbody>
-      <tr *ngFor="let s of escolas" id="row-escola-{{s.id}}">
-        <td *ngIf="!editing || editing.id !== s.id">{{ s.nome }}</td>
-        <td *ngIf="!editing || editing.id !== s.id">{{ s.endereco }}</td>
+    <div class="table-wrapper">
+      <table id="table-escolas" class="escolas-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let s of escolas"
+            id="row-escola-{{ s.id }}"
+            [class.is-editing]="editing?.id === s.id"
+          >
+            <td>
+              <ng-container *ngIf="editing?.id === s.id; else nomeView">
+                <input
+                  id="edit-nome-escola"
+                  [(ngModel)]="editing!.nome"
+                  name="editNome"
+                  required
+                />
+              </ng-container>
+              <ng-template #nomeView>
+                <span class="cell-text">{{ s.nome }}</span>
+              </ng-template>
+            </td>
 
-        <td *ngIf="!editing || editing.id !== s.id">
-          <button data-qa="btn-editar-escola-{{s.id}}" (click)="edit(s)">Editar</button>
-          <button data-qa="btn-excluir-escola-{{s.id}}" (click)="deleteEscola(s.id)">Excluir</button>
-        </td>
+            <td>
+              <ng-container *ngIf="editing?.id === s.id; else enderecoView">
+                <input
+                  id="edit-endereco-escola"
+                  [(ngModel)]="editing!.endereco"
+                  name="editEndereco"
+                />
+              </ng-container>
+              <ng-template #enderecoView>
+                <span class="cell-text">{{ s.endereco || '—' }}</span>
+              </ng-template>
+            </td>
 
-        <td *ngIf="editing && editing.id === s.id">
-          <input id="edit-nome-escola" [(ngModel)]="editing.nome" />
-          <input id="edit-endereco-escola" [(ngModel)]="editing.endereco" />
-          <button id="btn-salvar-edicao-escola" (click)="saveEdit()">Salvar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+            <td class="actions">
+              <ng-container *ngIf="editing?.id === s.id; else defaultActions">
+                <button
+                  id="btn-salvar-edicao-escola"
+                  type="button"
+                  class="btn ghost"
+                  (click)="saveEdit()"
+                >
+                  Salvar
+                </button>
+                <button
+                  type="button"
+                  class="btn subtle"
+                  (click)="editing = undefined"
+                >
+                  Cancelar
+                </button>
+              </ng-container>
+
+              <ng-template #defaultActions>
+                <button
+                  type="button"
+                  class="btn ghost"
+                  [attr.data-qa]="'btn-editar-escola-' + s.id"
+                  (click)="edit(s)"
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  class="btn danger"
+                  [attr.data-qa]="'btn-excluir-escola-' + s.id"
+                  (click)="deleteEscola(s.id)"
+                >
+                  Excluir
+                </button>
+              </ng-template>
+            </td>
+          </tr>
+          <tr *ngIf="!escolas.length">
+            <td colspan="3" class="empty">
+              Nenhuma escola cadastrada ainda.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

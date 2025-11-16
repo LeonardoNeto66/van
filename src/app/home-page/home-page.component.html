@@ -1,0 +1,11 @@
+<section class="hero">
+  <div class="hero-card">
+    <h1 class="title">Bem-vindo</h1>
+    <p class="subtitle">Selecione uma área para começar</p>
+    <div class="cta-group">
+      <a class="btn btn-cta" *ngFor="let link of navLinks" [routerLink]="['/', link.path]">
+        {{ link.label }}
+      </a>
+    </div>
+  </div>
+</section>

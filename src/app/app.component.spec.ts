@@ -17,7 +17,7 @@ describe('AppComponent', () => {
 
   it(`should have the 'vantcc' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
+    const app = fixture.componentInstance as any;
     expect(app.title).toEqual('vantcc');
   });
 

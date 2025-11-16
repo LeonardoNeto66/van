@@ -1,55 +1,159 @@
-<div id="empresas-card" class="card">
-  <h2>RF033 — Gerenciar Empresas</h2>
-
-  <div>
-    <label for="new-empresa">Nova Empresa</label>
-    <input id="input-nova-empresa" data-qa="input-nova-empresa" [(ngModel)]="newEmpresaName" />
-    <button id="btn-criar-empresa" data-qa="btn-criar-empresa" (click)="createEmpresa()">Criar</button>
-  </div>
-
-  <hr />
-
-  <div style="display:flex; gap:1rem;">
-    <div style="flex:1;">
-      <h3>Lista de Empresas</h3>
-      <ul id="list-empresas" data-qa="list-empresas">
-        <li *ngFor="let e of empresas" id="empresa-{{e.id}}">
-          <span>{{ e.nome }}</span>
-          <button data-qa="btn-selecionar-empresa-{{e.id}}" (click)="selectEmpresa(e.id)">Ver</button>
-          <button data-qa="btn-excluir-empresa-{{e.id}}" (click)="deleteEmpresa(e.id)">Excluir</button>
-        </li>
-      </ul>
-    </div>
-
-    <div style="flex:2;">
-      <h3>Detalhes da Empresa</h3>
-      <div *ngIf="selected; else noSel" id="detalhes-empresa">
-        <p><strong>Nome:</strong> <span id="empresa-nome">{{ selected.nome }}</span></p>
-        <p><strong>Criada em:</strong> <span id="empresa-criada">{{ selected.createdAt | date:'short' }}</span></p>
-        <p><strong>Solicitante:</strong> <span id="empresa-solicitante">{{ selected.solicitante }}</span></p>
-        <p><strong>Responsável:</strong> <span id="empresa-responsavel">{{ selected.responsavel || '—' }}</span></p>
-
-        <h4>Funcionários</h4>
-        <ul id="empresa-funcionarios">
-          <li *ngFor="let f of (selected.funcionarios || [])">{{ f }}</li>
-        </ul>
-
-        <h4>Vans</h4>
-        <table id="empresa-vans" border="1">
-          <thead><tr><th>Placa</th><th>Modelo</th></tr></thead>
-          <tbody>
-            <tr *ngFor="let vid of (selected.vans || [])">
-              <td>{{ (vans.find(v => v.id===vid)?.placa) || '—' }}</td>
-              <td>{{ (vans.find(v => v.id===vid)?.marcaModelo) || '—' }}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <button id="btn-excluir-empresa-detalhe" (click)="deleteEmpresa(selected.id)">Excluir Empresa</button>
+<section class="empresas-page">
+  <div id="empresas-card" class="empresas-card">
+    <header class="card-header">
+      <span class="badge">RF033</span>
+      <div class="header-copy">
+        <h1>Gerenciar Empresas</h1>
+        <p>Cadastrar e acompanhar as empresas cadastradas no sistema.</p>
       </div>
-      <ng-template #noSel>
-        <p id="no-empresa">Selecione uma empresa para ver detalhes</p>
-      </ng-template>
+    </header>
+
+    <form class="empresa-form" (ngSubmit)="createEmpresa()">
+      <label for="input-nova-empresa">
+        Nova Empresa *
+        <div class="input-row">
+          <input
+            id="input-nova-empresa"
+            data-qa="input-nova-empresa"
+            name="novaEmpresa"
+            [(ngModel)]="newEmpresaName"
+            required
+          />
+          <button
+            id="btn-criar-empresa"
+            data-qa="btn-criar-empresa"
+            class="btn primary"
+            type="submit"
+            [disabled]="!newEmpresaName.trim()"
+          >
+            Adicionar
+          </button>
+        </div>
+      </label>
+      <span class="helper">Campos com * são obrigatórios.</span>
+    </form>
+
+    <div class="content-grid">
+      <section class="panel list-panel card">
+        <header class="panel-header">
+          <h2>Empresas cadastradas</h2>
+          <p class="muted">Selecione uma empresa para visualizar detalhes.</p>
+        </header>
+
+        <ul id="list-empresas" data-qa="list-empresas" class="empresa-list">
+          <li
+            *ngFor="let e of empresas"
+            id="empresa-{{ e.id }}"
+            [class.is-active]="selected?.id === e.id"
+          >
+            <div class="empresa-info">
+              <span class="empresa-nome">{{ e.nome }}</span>
+              <span class="empresa-meta">
+                Criada em {{ e.createdAt | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+            <div class="actions">
+              <button
+                type="button"
+                class="btn ghost"
+                [attr.data-qa]="'btn-selecionar-empresa-' + e.id"
+                (click)="selectEmpresa(e.id)"
+              >
+                Ver detalhes
+              </button>
+              <button
+                type="button"
+                class="btn danger"
+                [attr.data-qa]="'btn-excluir-empresa-' + e.id"
+                (click)="deleteEmpresa(e.id)"
+              >
+                Excluir
+              </button>
+            </div>
+          </li>
+          <li *ngIf="!empresas.length" class="empty">
+            Nenhuma empresa cadastrada ainda.
+          </li>
+        </ul>
+      </section>
+
+      <section class="panel details-panel card">
+        <header class="panel-header">
+          <h2>Detalhes da empresa</h2>
+          <p class="muted">Informações completas da empresa selecionada.</p>
+        </header>
+
+        <div *ngIf="selected; else noSelection" id="detalhes-empresa" class="detalhes">
+          <div class="detail-grid">
+            <div>
+              <span class="detail-label">Nome</span>
+              <span id="empresa-nome" class="detail-value">{{ selected?.nome }}</span>
+            </div>
+            <div>
+              <span class="detail-label">Criada em</span>
+              <span id="empresa-criada" class="detail-value">
+                {{ selected?.createdAt | date:'dd/MM/yyyy HH:mm' }}
+              </span>
+            </div>
+            <div>
+              <span class="detail-label">Solicitante</span>
+              <span id="empresa-solicitante" class="detail-value">{{ selected?.solicitante }}</span>
+            </div>
+            <div>
+              <span class="detail-label">Responsável</span>
+              <span id="empresa-responsavel" class="detail-value">
+                {{ selected?.responsavel || '—' }}
+              </span>
+            </div>
+          </div>
+
+          <section class="detail-section">
+            <h3>Funcionários</h3>
+            <ul id="empresa-funcionarios" class="pill-list">
+              <li *ngFor="let f of (selected?.funcionarios || [])">{{ f }}</li>
+              <li *ngIf="!(selected?.funcionarios?.length)">Nenhum funcionário cadastrado.</li>
+            </ul>
+          </section>
+
+          <section class="detail-section">
+            <h3>Vans vinculadas</h3>
+            <table id="empresa-vans">
+              <thead>
+                <tr>
+                  <th>Placa</th>
+                  <th>Modelo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vid of (selected?.vans || [])">
+                  <td>{{ getVanPlaca(vid) }}</td>
+                  <td>{{ getVanModelo(vid) }}</td>
+                </tr>
+                <tr *ngIf="!(selected?.vans?.length)">
+                  <td colspan="2" class="empty-row">Nenhuma van vinculada.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <div class="footer-actions">
+            <button
+              id="btn-excluir-empresa-detalhe"
+              type="button"
+              class="btn danger wide"
+              (click)="deleteEmpresa(selected!.id)"
+            >
+              Excluir empresa
+            </button>
+          </div>
+        </div>
+
+        <ng-template #noSelection>
+          <p id="no-empresa" class="no-selection">
+            Selecione uma empresa na lista ao lado para visualizar os detalhes.
+          </p>
+        </ng-template>
+      </section>
     </div>
   </div>
-</div>
+</section>
