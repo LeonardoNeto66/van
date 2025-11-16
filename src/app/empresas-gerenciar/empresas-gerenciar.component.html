@@ -3,34 +3,109 @@
     <header class="card-header">
       <span class="badge">RF033</span>
       <div class="header-copy">
-        <h1>Gerenciar Empresas</h1>
-        <p>Cadastrar e acompanhar as empresas cadastradas no sistema.</p>
+        <h1>Cadastrar Empresas</h1>
+        <p>Cadastre novas empresas e acompanhe os registros existentes.</p>
       </div>
     </header>
 
     <form class="empresa-form" (ngSubmit)="createEmpresa()">
-      <label for="input-nova-empresa">
-        Nova Empresa *
-        <div class="input-row">
+      <div class="form-grid">
+        <label>
+          Nome da empresa *
           <input
-            id="input-nova-empresa"
-            data-qa="input-nova-empresa"
-            name="novaEmpresa"
-            [(ngModel)]="newEmpresaName"
+            id="input-nome-empresa"
+            name="nome"
+            [(ngModel)]="newEmpresa.nome"
             required
           />
-          <button
-            id="btn-criar-empresa"
-            data-qa="btn-criar-empresa"
-            class="btn primary"
-            type="submit"
-            [disabled]="!newEmpresaName.trim()"
-          >
-            Adicionar
-          </button>
-        </div>
-      </label>
-      <span class="helper">Campos com * são obrigatórios.</span>
+        </label>
+
+        <label>
+          Nome fantasia *
+          <input
+            id="input-nome-fantasia"
+            name="nomeFantasia"
+            [(ngModel)]="newEmpresa.nomeFantasia"
+            required
+          />
+        </label>
+
+        <label>
+          CNPJ *
+          <input
+            id="input-cnpj"
+            name="cnpj"
+            [(ngModel)]="newEmpresa.cnpj"
+            required
+            placeholder="00.000.000/0000-00"
+          />
+        </label>
+
+        <label>
+          Responsável legal *
+          <input
+            id="input-responsavel-legal"
+            name="responsavelLegal"
+            [(ngModel)]="newEmpresa.responsavelLegal"
+            required
+          />
+        </label>
+
+        <label>
+          CPF do responsável *
+          <input
+            id="input-cpf-responsavel"
+            name="cpfResponsavel"
+            [(ngModel)]="newEmpresa.cpfResponsavel"
+            required
+            placeholder="000.000.000-00"
+          />
+        </label>
+
+        <label>
+          Data de abertura *
+          <input
+            id="input-data-abertura"
+            type="date"
+            name="dataAbertura"
+            [(ngModel)]="newEmpresa.dataAbertura"
+            required
+          />
+        </label>
+
+        <label class="wide">
+          Endereço *
+          <input
+            id="input-endereco"
+            name="endereco"
+            [(ngModel)]="newEmpresa.endereco"
+            required
+          />
+        </label>
+
+        <label>
+          Telefone *
+          <input
+            id="input-telefone"
+            name="telefone"
+            [(ngModel)]="newEmpresa.telefone"
+            required
+            placeholder="(00) 00000-0000"
+          />
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <span class="helper">Campos com * são obrigatórios.</span>
+        <button
+          id="btn-criar-empresa"
+          class="btn primary"
+          type="submit"
+          [disabled]="!newEmpresa.nome.trim() || !newEmpresa.cnpj.trim()"
+        >
+          Cadastrar empresa
+        </button>
+      </div>
     </form>
 
     <div class="content-grid">
@@ -40,7 +115,7 @@
           <p class="muted">Selecione uma empresa para visualizar detalhes.</p>
         </header>
 
-        <ul id="list-empresas" data-qa="list-empresas" class="empresa-list">
+        <ul id="list-empresas" class="empresa-list">
           <li
             *ngFor="let e of empresas"
             id="empresa-{{ e.id }}"
@@ -49,14 +124,14 @@
             <div class="empresa-info">
               <span class="empresa-nome">{{ e.nome }}</span>
               <span class="empresa-meta">
-                Criada em {{ e.createdAt | date:'dd/MM/yyyy' }}
+                {{ e.nomeFantasia || 'Nome fantasia não informado' }}
               </span>
+              <span class="empresa-meta">CNPJ: {{ e.cnpj || '—' }}</span>
             </div>
             <div class="actions">
               <button
                 type="button"
                 class="btn ghost"
-                [attr.data-qa]="'btn-selecionar-empresa-' + e.id"
                 (click)="selectEmpresa(e.id)"
               >
                 Ver detalhes
@@ -64,7 +139,6 @@
               <button
                 type="button"
                 class="btn danger"
-                [attr.data-qa]="'btn-excluir-empresa-' + e.id"
                 (click)="deleteEmpresa(e.id)"
               >
                 Excluir
@@ -80,36 +154,50 @@
       <section class="panel details-panel card">
         <header class="panel-header">
           <h2>Detalhes da empresa</h2>
-          <p class="muted">Informações completas da empresa selecionada.</p>
+          <p class="muted">Informações completas do cadastro selecionado.</p>
         </header>
 
-        <div *ngIf="selected; else noSelection" id="detalhes-empresa" class="detalhes">
+        <div *ngIf="selected; else noSelection" class="detalhes">
           <div class="detail-grid">
             <div>
               <span class="detail-label">Nome</span>
-              <span id="empresa-nome" class="detail-value">{{ selected?.nome }}</span>
+              <span class="detail-value">{{ selected?.nome }}</span>
             </div>
             <div>
-              <span class="detail-label">Criada em</span>
-              <span id="empresa-criada" class="detail-value">
-                {{ selected?.createdAt | date:'dd/MM/yyyy HH:mm' }}
+              <span class="detail-label">Nome fantasia</span>
+              <span class="detail-value">{{ selected?.nomeFantasia || '—' }}</span>
+            </div>
+            <div>
+              <span class="detail-label">CNPJ</span>
+              <span class="detail-value">{{ selected?.cnpj || '—' }}</span>
+            </div>
+            <div>
+              <span class="detail-label">Data de abertura</span>
+              <span class="detail-value">
+                {{ selected?.dataAbertura ? (selected?.dataAbertura | date:'dd/MM/yyyy') : '—' }}
               </span>
             </div>
             <div>
-              <span class="detail-label">Solicitante</span>
-              <span id="empresa-solicitante" class="detail-value">{{ selected?.solicitante }}</span>
+              <span class="detail-label">Responsável legal</span>
+              <span class="detail-value">{{ selected?.responsavelLegal || '—' }}</span>
             </div>
             <div>
-              <span class="detail-label">Responsável</span>
-              <span id="empresa-responsavel" class="detail-value">
-                {{ selected?.responsavel || '—' }}
-              </span>
+              <span class="detail-label">CPF do responsável</span>
+              <span class="detail-value">{{ selected?.cpfResponsavel || '—' }}</span>
+            </div>
+            <div>
+              <span class="detail-label">Telefone</span>
+              <span class="detail-value">{{ selected?.telefone || '—' }}</span>
+            </div>
+            <div>
+              <span class="detail-label">Endereço</span>
+              <span class="detail-value">{{ selected?.endereco || '—' }}</span>
             </div>
           </div>
 
           <section class="detail-section">
             <h3>Funcionários</h3>
-            <ul id="empresa-funcionarios" class="pill-list">
+            <ul class="pill-list">
               <li *ngFor="let f of (selected?.funcionarios || [])">{{ f }}</li>
               <li *ngIf="!(selected?.funcionarios?.length)">Nenhum funcionário cadastrado.</li>
             </ul>
@@ -117,7 +205,7 @@
 
           <section class="detail-section">
             <h3>Vans vinculadas</h3>
-            <table id="empresa-vans">
+            <table>
               <thead>
                 <tr>
                   <th>Placa</th>
@@ -138,7 +226,6 @@
 
           <div class="footer-actions">
             <button
-              id="btn-excluir-empresa-detalhe"
               type="button"
               class="btn danger wide"
               (click)="deleteEmpresa(selected!.id)"
@@ -149,7 +236,7 @@
         </div>
 
         <ng-template #noSelection>
-          <p id="no-empresa" class="no-selection">
+          <p class="no-selection">
             Selecione uma empresa na lista ao lado para visualizar os detalhes.
           </p>
         </ng-template>

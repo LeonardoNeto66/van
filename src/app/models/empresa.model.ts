@@ -1,10 +1,16 @@
 export interface Empresa {
   id: string;
   nome: string;
+  nomeFantasia?: string;
   cnpj?: string;
-  responsavel?: string;
+  responsavelLegal?: string;
+  cpfResponsavel?: string;
+  dataAbertura?: string;
+  endereco?: string;
+  telefone?: string;
+  responsavel?: string; // legado
   solicitante?: string;
   createdAt: string;
-  funcionarios?: string[]; // nomes simples
-  vans?: string[]; // van ids
+  funcionarios?: string[];
+  vans?: string[];
 }
