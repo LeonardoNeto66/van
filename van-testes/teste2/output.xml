@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.10.0 on win32)" generated="2025-11-17T15:22:50.469607" rpa="false" schemaversion="5">
+<suite id="s1" name="Remover-Van" source="C:\Users\thalita.santos\Desktop\robot\van-testes\teste2\remover-van.robot">
+<test id="s1-t1" name="CT02: Remover van com sucesso" line="10">
+<kw name="Abrir navegador para remover van" owner="resources" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:22:50.927800" level="INFO">Opening browser 'firefox' to base url 'http://localhost:4200/'.</msg>
+<arg>${URL}</arg>
+<arg>browser=firefox</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-17T15:22:50.923155" elapsed="11.839940"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-17T15:23:02.763095" elapsed="0.299822"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:22:50.923155" elapsed="12.140044"/>
+</kw>
+<kw name="Acessar página de vans" owner="resources">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:03.063199" level="INFO">Opening url 'http://localhost:4200/'</msg>
+<arg>${URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-17T15:23:03.063199" elapsed="0.377597"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${TEXTO_PAG_INICIAL}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-17T15:23:03.440796" elapsed="0.036294"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:03.483115" level="INFO">Clicking element '//a[@class='btn btn-cta'][contains(.,'Gerenciar Vans')]'.</msg>
+<arg>${GERENCIAR_VANS}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:23:03.483115" elapsed="0.189658"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${TEXTO_PAG_VANS}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-17T15:23:03.672773" elapsed="0.010198"/>
+</kw>
+<kw name="Scroll Element Into View" owner="SeleniumLibrary">
+<arg>${TEXT_VANS_CADASTRADAS}</arg>
+<doc>Scrolls the element identified by ``locator`` into view.</doc>
+<status status="PASS" start="2025-11-17T15:23:03.682971" elapsed="0.319802"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:23:03.063199" elapsed="0.939574"/>
+</kw>
+<kw name="Clicar em remover van" owner="resources">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:04.002773" level="INFO">Clicking button '//button[@type='button'][contains(.,'Excluir')]'.</msg>
+<arg>${BUTTON_EXCLUIR}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:23:04.002773" elapsed="0.093950"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:23:04.002773" elapsed="0.093950"/>
+</kw>
+<kw name="Fechar navegador" owner="resources" type="TEARDOWN">
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:04.233149" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2025-11-17T15:23:04.099706" elapsed="0.133443"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-11-17T15:23:04.233149" elapsed="3.589758"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:23:04.098704" elapsed="3.724203"/>
+</kw>
+<tag>remover</tag>
+<tag>vans</tag>
+<status status="PASS" start="2025-11-17T15:22:50.923155" elapsed="16.899752"/>
+</test>
+<doc>Testes automatizados para remoção de vans</doc>
+<status status="PASS" start="2025-11-17T15:22:50.475217" elapsed="17.347690"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">remover</stat>
+<stat pass="1" fail="0" skip="0">vans</stat>
+</tag>
+<suite>
+<stat name="Remover-Van" id="s1" pass="1" fail="0" skip="0">Remover-Van</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

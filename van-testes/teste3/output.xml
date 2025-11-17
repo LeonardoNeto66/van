@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.10.0 on win32)" generated="2025-11-17T15:23:27.113063" rpa="false" schemaversion="5">
+<suite id="s1" name="Editar-Empresa" source="C:\Users\thalita.santos\Desktop\robot\van-testes\teste3\editar-empresa.robot">
+<test id="s1-t1" name="CT03: Editar empresa com sucesso" line="10">
+<kw name="Abrir navegador para editar empresa" owner="resources" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:27.626227" level="INFO">Opening browser 'firefox' to base url 'http://localhost:4200/'.</msg>
+<arg>${URL}</arg>
+<arg>browser=firefox</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-17T15:23:27.625648" elapsed="11.155265"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-17T15:23:38.782926" elapsed="0.293827"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:23:27.622789" elapsed="11.453964"/>
+</kw>
+<kw name="Acessar página de empresas" owner="resources">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:39.082841" level="INFO">Opening url 'http://localhost:4200/'</msg>
+<arg>${URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-17T15:23:39.082841" elapsed="0.370037"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${TEXTO_PAG_INICIAL}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-17T15:23:39.452878" elapsed="0.039994"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:39.494899" level="INFO">Clicking element '//a[@class='btn btn-cta'][contains(.,'Empresas')]'.</msg>
+<arg>${EMPRESAS}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:23:39.494899" elapsed="0.237939"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${TEXTO_PAG_EMPRESAS}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-17T15:23:39.732838" elapsed="0.010445"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:23:39.076753" elapsed="0.666530"/>
+</kw>
+<kw name="Editar dados da empresa" owner="resources">
+<kw name="Scroll Element Into View" owner="SeleniumLibrary">
+<arg>${BTN_DETALHES}</arg>
+<doc>Scrolls the element identified by ``locator`` into view.</doc>
+<status status="PASS" start="2025-11-17T15:23:39.748047" elapsed="0.314767"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:40.062814" level="INFO">Clicking button '//button[@type='button'][contains(.,'Ver detalhes')]'.</msg>
+<arg>${BTN_DETALHES}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:23:40.062814" elapsed="0.130158"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${BTN_EDITAR_DADOS}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-17T15:23:40.192972" elapsed="0.005062"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:40.198034" level="INFO">Clicking button '//button[@type='button'][contains(.,'Editar dados')]'.</msg>
+<arg>${BTN_EDITAR_DADOS}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:23:40.198034" elapsed="0.105246"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${EDITAR_NOME}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-17T15:23:40.303280" elapsed="0.005086"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:40.308366" level="INFO">Typing text 'Tio GuiGui' into text field '//input[@name='editNome']'.</msg>
+<arg>${EDITAR_NOME}</arg>
+<arg>Tio GuiGui</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:23:40.308366" elapsed="0.034870"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:40.351154" level="INFO">Typing text 'Tio GuiGui Ltda' into text field '//input[contains(@name,'editNomeFantasia')]'.</msg>
+<arg>${EDITAR_NOME_FANTASIA}</arg>
+<arg>Tio GuiGui Ltda</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:23:40.351154" elapsed="0.102131"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:23:39.748047" elapsed="0.705238"/>
+</kw>
+<kw name="Clicar em salvar alterações" owner="resources">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:40.463146" level="INFO">Clicking button '//button[@type='submit'][contains(.,'Salvar alterações')]'.</msg>
+<arg>${BTN_SALVAR}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:23:40.463146" elapsed="0.159879"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:23:40.453285" elapsed="0.169740"/>
+</kw>
+<kw name="Fechar navegador" owner="resources" type="TEARDOWN">
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:23:40.830181" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-3.png"&gt;&lt;img src="selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2025-11-17T15:23:40.623025" elapsed="0.207156"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-11-17T15:23:40.830181" elapsed="3.793120"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:23:40.623025" elapsed="4.000276"/>
+</kw>
+<tag>editar</tag>
+<tag>empresas</tag>
+<status status="PASS" start="2025-11-17T15:23:27.622789" elapsed="17.000512"/>
+</test>
+<doc>Testes automatizados para edição de empresas</doc>
+<status status="PASS" start="2025-11-17T15:23:27.124973" elapsed="17.498328"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">editar</stat>
+<stat pass="1" fail="0" skip="0">empresas</stat>
+</tag>
+<suite>
+<stat name="Editar-Empresa" id="s1" pass="1" fail="0" skip="0">Editar-Empresa</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

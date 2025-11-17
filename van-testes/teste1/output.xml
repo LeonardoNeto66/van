@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.10.0 on win32)" generated="2025-11-17T15:22:00.742824" rpa="false" schemaversion="5">
+<suite id="s1" name="Adicionar-Escola" source="C:\Users\thalita.santos\Desktop\robot\van-testes\teste1\adicionar-escola.robot">
+<test id="s1-t1" name="CT02: Adicionar nova escola com sucesso" line="10">
+<kw name="Abrir navegador para adicionar escola" owner="resources" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:22:01.203594" level="INFO">Opening browser 'firefox' to base url 'http://localhost:4200/'.</msg>
+<arg>${URL}</arg>
+<arg>browser=firefox</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-17T15:22:01.202814" elapsed="11.730150"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-11-17T15:22:12.932964" elapsed="0.310099"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:22:01.198796" elapsed="12.044267"/>
+</kw>
+<kw name="Acessar página de cadastro de escolas" owner="resources">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:22:13.252871" level="INFO">Opening url 'http://localhost:4200/'</msg>
+<arg>${URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-17T15:22:13.243063" elapsed="0.406248"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${TEXTO_PAG_INICIAL}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-17T15:22:13.649311" elapsed="0.043673"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:22:13.692984" level="INFO">Clicking element '//a[@class='btn btn-cta'][contains(.,'Escolas')]'.</msg>
+<arg>${ESCOLAS}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:22:13.692984" elapsed="0.189957"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${TEXTO_PAG_ESCOLAS}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-17T15:22:13.882941" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:22:13.243063" elapsed="0.639878"/>
+</kw>
+<kw name="Preencher dados da escola" owner="resources">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:22:13.892746" level="INFO">Typing text 'Leonardo da Vinci' into text field '//input[contains(@name,'nome')]'.</msg>
+<arg>${INPUT_NOME_ESCOLA}</arg>
+<arg>${nome}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:22:13.892746" elapsed="0.086059"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:22:13.980811" level="INFO">Typing text 'Rua das Flores, 123' into text field '//input[contains(@name,'endereco')]'.</msg>
+<arg>${INPUT_ENDERECO_ESCOLA}</arg>
+<arg>${endereco}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:22:13.978805" elapsed="0.045523"/>
+</kw>
+<arg>${NOME_ESCOLA}</arg>
+<arg>${ENDERECO_ESCOLA}</arg>
+<status status="PASS" start="2025-11-17T15:22:13.882941" elapsed="0.141387"/>
+</kw>
+<kw name="Clicar em adicionar escola" owner="resources">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:22:14.024328" level="INFO">Clicking button '//button[@type='submit'][contains(.,'Adicionar escola')]'.</msg>
+<arg>${BUTTON_SALVAR}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-17T15:22:14.024328" elapsed="0.113443"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${TEXTO_PAG_ESCOLAS}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-11-17T15:22:14.137771" elapsed="0.005119"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:22:14.024328" elapsed="0.118562"/>
+</kw>
+<kw name="Fechar navegador" owner="resources" type="TEARDOWN">
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2025-11-17T15:22:14.258737" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2025-11-17T15:22:14.142890" elapsed="0.115847"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-11-17T15:22:14.258737" elapsed="4.183694"/>
+</kw>
+<status status="PASS" start="2025-11-17T15:22:14.142890" elapsed="4.299541"/>
+</kw>
+<tag>cadastro</tag>
+<tag>escolas</tag>
+<status status="PASS" start="2025-11-17T15:22:01.198796" elapsed="17.244152"/>
+</test>
+<doc>Testes automatizados para o cadastro de escolas.</doc>
+<status status="PASS" start="2025-11-17T15:22:00.742824" elapsed="17.700124"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">cadastro</stat>
+<stat pass="1" fail="0" skip="0">escolas</stat>
+</tag>
+<suite>
+<stat name="Adicionar-Escola" id="s1" pass="1" fail="0" skip="0">Adicionar-Escola</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
