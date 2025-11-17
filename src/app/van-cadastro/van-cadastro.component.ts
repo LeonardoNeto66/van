@@ -20,7 +20,7 @@ export class VanCadastroComponent implements OnInit {
   savedMsg = '';
   viewingVan?: Van;
 
-  constructor(private fb: FormBuilder, private api: FakeApiService) {}
+  constructor(private fb: FormBuilder, private api: FakeApiService) { }
 
   ngOnInit() {
     this.empresas = this.api.listEmpresas();
@@ -58,7 +58,6 @@ export class VanCadastroComponent implements OnInit {
   }
 
   removeVan(id: string) {
-    if (!confirm('Confirmar remoção da van?')) return;
     this.api.deleteVan(id);
     if (this.viewingVan?.id === id) {
       this.viewingVan = undefined;
