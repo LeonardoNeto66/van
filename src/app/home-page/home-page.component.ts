@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
 })
 export class HomePageComponent {
   navLinks = [
-    { path: 'cadastrar-van', label: 'Cadastrar Van' },
+    { path: 'gerenciar-vans', label: 'Gerenciar Vans' },
     { path: 'empresas', label: 'Empresas' },
     { path: 'escolas', label: 'Escolas' }
   ];

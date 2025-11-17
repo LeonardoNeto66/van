@@ -101,7 +101,7 @@
           id="btn-criar-empresa"
           class="btn primary"
           type="submit"
-          [disabled]="!newEmpresa.nome.trim() || !newEmpresa.cnpj.trim()"
+          [disabled]="!canSubmitNew"
         >
           Cadastrar empresa
         </button>
@@ -158,71 +158,136 @@
         </header>
 
         <div *ngIf="selected; else noSelection" class="detalhes">
-          <div class="detail-grid">
-            <div>
-              <span class="detail-label">Nome</span>
-              <span class="detail-value">{{ selected?.nome }}</span>
+          <ng-container *ngIf="!isEditing; else editTemplate">
+            <div class="detail-actions">
+              <button
+                type="button"
+                class="btn ghost"
+                (click)="startEdit()"
+              >
+                Editar dados
+              </button>
             </div>
-            <div>
-              <span class="detail-label">Nome fantasia</span>
-              <span class="detail-value">{{ selected?.nomeFantasia || '—' }}</span>
-            </div>
-            <div>
-              <span class="detail-label">CNPJ</span>
-              <span class="detail-value">{{ selected?.cnpj || '—' }}</span>
-            </div>
-            <div>
-              <span class="detail-label">Data de abertura</span>
-              <span class="detail-value">
-                {{ selected?.dataAbertura ? (selected?.dataAbertura | date:'dd/MM/yyyy') : '—' }}
-              </span>
-            </div>
-            <div>
-              <span class="detail-label">Responsável legal</span>
-              <span class="detail-value">{{ selected?.responsavelLegal || '—' }}</span>
-            </div>
-            <div>
-              <span class="detail-label">CPF do responsável</span>
-              <span class="detail-value">{{ selected?.cpfResponsavel || '—' }}</span>
-            </div>
-            <div>
-              <span class="detail-label">Telefone</span>
-              <span class="detail-value">{{ selected?.telefone || '—' }}</span>
-            </div>
-            <div>
-              <span class="detail-label">Endereço</span>
-              <span class="detail-value">{{ selected?.endereco || '—' }}</span>
-            </div>
-          </div>
 
-          <section class="detail-section">
-            <h3>Funcionários</h3>
-            <ul class="pill-list">
-              <li *ngFor="let f of (selected?.funcionarios || [])">{{ f }}</li>
-              <li *ngIf="!(selected?.funcionarios?.length)">Nenhum funcionário cadastrado.</li>
-            </ul>
-          </section>
+            <div class="detail-grid">
+              <div>
+                <span class="detail-label">Nome</span>
+                <span class="detail-value">{{ selected?.nome || '—' }}</span>
+              </div>
+              <div>
+                <span class="detail-label">Nome fantasia</span>
+                <span class="detail-value">{{ selected?.nomeFantasia || '—' }}</span>
+              </div>
+              <div>
+                <span class="detail-label">CNPJ</span>
+                <span class="detail-value">{{ selected?.cnpj || '—' }}</span>
+              </div>
+              <div>
+                <span class="detail-label">Data de abertura</span>
+                <span class="detail-value">
+                  {{ selected?.dataAbertura ? (selected?.dataAbertura | date:'dd/MM/yyyy') : '—' }}
+                </span>
+              </div>
+              <div>
+                <span class="detail-label">Responsável legal</span>
+                <span class="detail-value">{{ selected?.responsavelLegal || '—' }}</span>
+              </div>
+              <div>
+                <span class="detail-label">CPF do responsável</span>
+                <span class="detail-value">{{ selected?.cpfResponsavel || '—' }}</span>
+              </div>
+              <div>
+                <span class="detail-label">Telefone</span>
+                <span class="detail-value">{{ selected?.telefone || '—' }}</span>
+              </div>
+              <div>
+                <span class="detail-label">Endereço</span>
+                <span class="detail-value">{{ selected?.endereco || '—' }}</span>
+              </div>
+            </div>
 
-          <section class="detail-section">
-            <h3>Vans vinculadas</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Placa</th>
-                  <th>Modelo</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let vid of (selected?.vans || [])">
-                  <td>{{ getVanPlaca(vid) }}</td>
-                  <td>{{ getVanModelo(vid) }}</td>
-                </tr>
-                <tr *ngIf="!(selected?.vans?.length)">
-                  <td colspan="2" class="empty-row">Nenhuma van vinculada.</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
+            <section class="detail-section">
+              <h3>Funcionários</h3>
+              <ul class="pill-list">
+                <li *ngFor="let f of (selected?.funcionarios || [])">{{ f }}</li>
+                <li *ngIf="!(selected?.funcionarios?.length)">Nenhum funcionário cadastrado.</li>
+              </ul>
+            </section>
+
+            <section class="detail-section">
+              <h3>Vans vinculadas</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vid of (selected?.vans || [])">
+                    <td>{{ $any(vid).placa || vid }}</td>
+                    <td>{{ $any(vid).modelo || '—' }}</td>
+                  </tr>
+                  <tr *ngIf="!(selected?.vans?.length)">
+                    <td colspan="2" class="empty-row">Nenhuma van vinculada.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </ng-container>
+
+          <ng-template #editTemplate>
+            <form class="detail-edit" (ngSubmit)="saveEdit()">
+              <div class="detail-actions">
+                <button type="button" class="btn subtle" (click)="cancelEdit()">Cancelar</button>
+                <button type="submit" class="btn primary" [disabled]="!canSaveEdition">
+                  Salvar alterações
+                </button>
+              </div>
+
+              <div class="detail-form-grid">
+                <label>
+                  Nome da empresa *
+                  <input name="editNome" [(ngModel)]="editEmpresa.nome" required />
+                </label>
+
+                <label>
+                  Nome fantasia *
+                  <input name="editNomeFantasia" [(ngModel)]="editEmpresa.nomeFantasia" required />
+                </label>
+
+                <label>
+                  CNPJ *
+                  <input name="editCnpj" [(ngModel)]="editEmpresa.cnpj" required />
+                </label>
+
+                <label>
+                  Responsável legal *
+                  <input name="editResponsavelLegal" [(ngModel)]="editEmpresa.responsavelLegal" required />
+                </label>
+
+                <label>
+                  CPF do responsável *
+                  <input name="editCpf" [(ngModel)]="editEmpresa.cpfResponsavel" required />
+                </label>
+
+                <label>
+                  Data de abertura *
+                  <input type="date" name="editDataAbertura" [(ngModel)]="editEmpresa.dataAbertura" required />
+                </label>
+
+                <label class="wide">
+                  Endereço *
+                  <input name="editEndereco" [(ngModel)]="editEmpresa.endereco" required />
+                </label>
+
+                <label>
+                  Telefone *
+                  <input name="editTelefone" [(ngModel)]="editEmpresa.telefone" required />
+                </label>
+              </div>
+            </form>
+          </ng-template>
 
           <div class="footer-actions">
             <button

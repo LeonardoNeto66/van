@@ -73,41 +73,104 @@
         <span class="status" *ngIf="savedMsg">{{ savedMsg }}</span>
         <button type="submit" class="btn solid" [disabled]="vanForm.invalid">Salvar van</button>
       </footer>
+      <div id="lastCreatedVanId" style="display:none"></div>
     </form>
   </div>
 
   <section class="van-list card">
-    <h3>Vans Cadastradas</h3>
-    <table id="table-vans" data-qa="table-vans" border="1">
-      <thead>
-        <tr>
-          <th>Placa</th>
-          <th>Marca/Modelo</th>
-          <th>Empresa</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let v of vans" [attr.data-qa]="'row-van-' + v.id">
-          <td>{{v.placa}}</td>
-          <td>{{v.marcaModelo}}</td>
-          <input id="input-nova-empresa" [attr.data-qa]="'input-nova-empresa'" #newEmpresaInput />
-          <button id="btn-criar-empresa" [attr.data-qa]="'btn-criar-empresa'" type="button">Criar</button>
+    <header class="list-header">
+      <h3>Vans cadastradas</h3>
+      <p class="muted">Visualize informações básicas e gerencie cada van.</p>
+    </header>
 
-          <ul id="list-empresas" [attr.data-qa]="'list-empresas'">
-            <li *ngFor="let e of empresas" id="empresa-{{e.id}}">
-              <span>{{ e.nome }}</span>
-              <button [attr.data-qa]="'btn-selecionar-empresa-' + e.id" (click)="getEmpresaNome(e.id)">Ver</button>
-              <button [attr.data-qa]="'btn-excluir-empresa-' + e.id" type="button">Excluir</button>
-            </li>
-          </ul>
-
-          <!-- Robot hook -->
-          <div id="lastCreatedVanId" style="display:none"></div>
-          <td>{{v.marcaModelo}}</td>
-          <td>{{ getEmpresaNome(v.empresaId) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-wrapper">
+      <table id="table-vans" data-qa="table-vans" class="van-table">
+        <thead>
+          <tr>
+            <th>Placa</th>
+            <th>Marca/Modelo</th>
+            <th>Empresa</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of vans" [attr.data-qa]="'row-van-' + v.id">
+            <td>{{ v.placa }}</td>
+            <td>{{ v.marcaModelo }}</td>
+            <td>{{ getEmpresaNome(v.empresaId) }}</td>
+            <td class="actions">
+              <button type="button" class="btn ghost" (click)="viewVan(v.id)">Ver detalhes</button>
+              <button type="button" class="btn danger" (click)="removeVan(v.id)">Excluir</button>
+            </td>
+          </tr>
+          <tr *ngIf="!vans.length">
+            <td colspan="4" class="empty-row">Nenhuma van cadastrada.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
+
+  <section class="van-details card" *ngIf="viewingVan; else noSelection">
+    <header class="details-header">
+      <h3>Detalhes da van</h3>
+      <p class="muted">Informações completas do cadastro selecionado.</p>
+    </header>
+
+    <div class="detail-grid">
+      <div>
+        <span class="detail-label">Placa</span>
+        <span class="detail-value">{{ viewingVan?.placa }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Renavam</span>
+        <span class="detail-value">{{ viewingVan?.renavam }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Marca / Modelo</span>
+        <span class="detail-value">{{ viewingVan?.marcaModelo }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Tipo</span>
+        <span class="detail-value">{{ viewingVan?.tipo }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Espécie</span>
+        <span class="detail-value">{{ viewingVan?.especie }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Combustível</span>
+        <span class="detail-value">{{ viewingVan?.combustivel }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Ano modelo</span>
+        <span class="detail-value">{{ viewingVan?.anoModelo }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Ano fabricação</span>
+        <span class="detail-value">{{ viewingVan?.anoFabricacao }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Potência (cv)</span>
+        <span class="detail-value">{{ viewingVan?.potencia }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Cilindradas</span>
+        <span class="detail-value">{{ viewingVan?.cilindradas }}</span>
+      </div>
+      <div>
+        <span class="detail-label">Empresa vinculada</span>
+        <span class="detail-value">{{ getEmpresaNome(viewingVan?.empresaId) }}</span>
+      </div>
+    </div>
+  </section>
+
+  <ng-template #noSelection>
+    <section class="van-details card empty-details">
+      <header class="details-header">
+        <h3>Detalhes da van</h3>
+        <p class="muted">Selecione uma van para visualizar as informações completas.</p>
+      </header>
+    </section>
+  </ng-template>
 </section>

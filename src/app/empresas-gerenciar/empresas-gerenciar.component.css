@@ -218,6 +218,17 @@ input:focus {
   width: 100%;
 }
 
+.btn.subtle {
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.6);
+  color: #6b5a23;
+}
+
+.btn.subtle:hover {
+  background: rgba(255, 232, 150, 0.35);
+  color: #3f3312;
+}
+
 .btn:active:not(:disabled) {
   transform: translateY(1px);
 }
@@ -333,6 +344,37 @@ tbody tr:last-child td {
 .footer-actions {
   display: flex;
   justify-content: flex-end;
+}
+
+.detail-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.detail-edit {
+  display: grid;
+  gap: 24px;
+}
+
+.detail-form-grid {
+  display: grid;
+  row-gap: 20px;
+  column-gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.detail-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  color: #2c230d;
+}
+
+.detail-form-grid label.wide {
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 900px) {

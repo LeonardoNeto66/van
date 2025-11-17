@@ -6,7 +6,7 @@ import { EscolasGerenciarComponent } from './escolas-gerenciar/escolas-gerenciar
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomePageComponent },
-  { path: 'cadastrar-van', component: VanCadastroComponent, data: { title: 'Cadastrar Van' } },
+  { path: 'gerenciar-vans', component: VanCadastroComponent, data: { title: 'Gerenciar Vans' } },
   { path: 'empresas', component: EmpresasGerenciarComponent, data: { title: 'Empresas' } },
   { path: 'escolas', component: EscolasGerenciarComponent, data: { title: 'Escolas' } }
 ];

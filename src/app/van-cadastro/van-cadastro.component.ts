@@ -18,6 +18,7 @@ export class VanCadastroComponent implements OnInit {
   empresas: Empresa[] = [];
   vans: Van[] = [];
   savedMsg = '';
+  viewingVan?: Van;
 
   constructor(private fb: FormBuilder, private api: FakeApiService) {}
 
@@ -37,28 +38,47 @@ export class VanCadastroComponent implements OnInit {
       cilindradas: [0, [Validators.required, Validators.min(1)]],
       empresaId: ['']
     });
+    this.refreshData();
   }
 
   onSubmit() {
     if (this.vanForm.invalid) return;
-    const van = this.api.createVan(this.vanForm.value);
+    const created = this.api.createVan(this.vanForm.value);
     this.savedMsg = 'Van cadastrada com sucesso!';
-    this.vans = this.api.listVans();
+    this.refreshData();
+    this.viewingVan = this.api.getVan(created.id);
     this.vanForm.reset({
       anoModelo: new Date().getFullYear(),
       anoFabricacao: new Date().getFullYear()
     });
     setTimeout(() => {
       const el = document.getElementById('lastCreatedVanId');
-      if (el) el.textContent = van.id;
+      if (el) el.textContent = created.id;
     }, 50);
   }
 
   removeVan(id: string) {
     if (!confirm('Confirmar remoção da van?')) return;
     this.api.deleteVan(id);
-    this.vans = this.api.listVans();
+    if (this.viewingVan?.id === id) {
+      this.viewingVan = undefined;
+    }
+    this.refreshData();
   }
+
+  viewVan(id: string) {
+    this.viewingVan = this.api.getVan(id);
+  }
+
+  private refreshData() {
+    this.empresas = this.api.listEmpresas();
+    this.vans = this.api.listVans();
+    if (this.viewingVan) {
+      const updated = this.api.getVan(this.viewingVan.id);
+      this.viewingVan = updated ?? undefined;
+    }
+  }
+
   getEmpresaNome(empresaId: string | undefined): string {
     if (!empresaId) return '—';
     return this.empresas.find(x => x.id === empresaId)?.nome || '—';

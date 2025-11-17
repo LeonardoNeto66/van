@@ -27,9 +27,15 @@ export class FakeApiService {
     const emp1: Empresa = {
       id: uuid(),
       nome: 'Transporte Alfa',
+      nomeFantasia: 'Alfa Transportes Escolares',
       cnpj: '12.345.678/0001-90',
+      responsavelLegal: 'João Motorista',
+      cpfResponsavel: '123.456.789-00',
+      dataAbertura: new Date(2018, 6, 4).toISOString(),
+      endereco: 'Rua das Vans, 45 - Centro',
+      telefone: '(11) 98888-0000',
       responsavel: 'João Motorista',
-      solicitante: 'AdminPortal',
+      solicitante: 'Portal Vanguard',
       createdAt: new Date().toISOString(),
       funcionarios: ['João Motorista','Maria Auxiliar'],
       vans: []
@@ -128,27 +134,47 @@ export class FakeApiService {
   getEmpresa(id: string): Empresa | undefined { return this.state.empresas.find(e => e.id === id); }
 
   createEmpresa(partial: Partial<Empresa>): Empresa {
-    const e: Empresa = {
+    const now = new Date().toISOString();
+    const empresa: Empresa = {
       id: uuid(),
       nome: partial.nome || 'Nova Empresa',
+      nomeFantasia: partial.nomeFantasia,
       cnpj: partial.cnpj,
-      responsavel: partial.responsavel,
-      solicitante: partial.solicitante || 'Unknown',
-      createdAt: new Date().toISOString(),
+      responsavelLegal: partial.responsavelLegal ?? partial.responsavel,
+      cpfResponsavel: partial.cpfResponsavel,
+      dataAbertura: partial.dataAbertura,
+      endereco: partial.endereco,
+      telefone: partial.telefone,
+      responsavel: partial.responsavelLegal ?? partial.responsavel,
+      solicitante: partial.solicitante || 'Portal Vanguard',
+      createdAt: now,
       funcionarios: partial.funcionarios || [],
       vans: partial.vans || []
     };
-    this.state.empresas.push(e);
+    this.state.empresas.push(empresa);
     this.save();
-    return e;
+    return empresa;
   }
 
   updateEmpresa(id: string, patch: Partial<Empresa>) {
-    const idx = this.state.empresas.findIndex(e => e.id === id);
-    if (idx === -1) return;
-    this.state.empresas[idx] = { ...this.state.empresas[idx], ...patch };
+    const empresa = this.state.empresas.find(e => e.id === id);
+    if (!empresa) return;
+    if (patch.nome !== undefined) empresa.nome = patch.nome;
+    if (patch.nomeFantasia !== undefined) empresa.nomeFantasia = patch.nomeFantasia;
+    if (patch.cnpj !== undefined) empresa.cnpj = patch.cnpj;
+    if (patch.responsavelLegal !== undefined) empresa.responsavelLegal = patch.responsavelLegal;
+    if (patch.cpfResponsavel !== undefined) empresa.cpfResponsavel = patch.cpfResponsavel;
+    if (patch.dataAbertura !== undefined) empresa.dataAbertura = patch.dataAbertura;
+    if (patch.endereco !== undefined) empresa.endereco = patch.endereco;
+    if (patch.telefone !== undefined) empresa.telefone = patch.telefone;
+    if (patch.responsavel !== undefined || patch.responsavelLegal !== undefined) {
+      empresa.responsavel = patch.responsavelLegal ?? patch.responsavel ?? empresa.responsavel;
+    }
+    if (patch.funcionarios !== undefined) empresa.funcionarios = [...patch.funcionarios];
+    if (patch.vans !== undefined) empresa.vans = [...patch.vans];
+    if (patch.solicitante !== undefined) empresa.solicitante = patch.solicitante;
     this.save();
-    return this.state.empresas[idx];
+    return empresa;
   }
 
   deleteEmpresa(id: string) {
